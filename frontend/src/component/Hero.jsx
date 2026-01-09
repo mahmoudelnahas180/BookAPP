@@ -36,15 +36,15 @@ const CustomLeftArrow = ({ onClick, ...rest }) => {
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
-    items: 5
+    items: 1
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 4
+    items: 1
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
-    items: 2
+    items: 1
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
@@ -54,8 +54,7 @@ const responsive = {
 
 export default function Hero() {
   return (
-    <div className="py-10 bg-gray-50 relative"> {/* ضفت relative هنا عشان الأزرار تتمحور صح */}
-      <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Featured Books</h2>
+    <div className="py-10 bg-gray-50 relative mt-[90px]"> {/* ضفت relative هنا عشان الأزرار تتمحور صح */}
 
       <Carousel
         responsive={responsive}
@@ -70,36 +69,19 @@ export default function Hero() {
         customRightArrow={<CustomRightArrow />}
         customLeftArrow={<CustomLeftArrow />}
       >
+        <div className='relative h-[70vh] md:h-[80vh] '>
+          <img src="../../public/img_1.jpg" alt="dd" className='block h-full w-full object-cover' />
 
-        {/* Card 1 Example */}
-        <div className="bg-white rounded-lg shadow-md p-4 h-64 flex flex-col justify-center items-center">
-          <h3 className="text-lg font-semibold">Book Title 1</h3>
-          <p className="text-gray-500">Author Name</p>
+        </div>
+        <div className='relative h-[70vh] md:h-[80vh] '>
+          <img src="../../public/img_2.jpg" alt="dd" className='block h-full w-full object-cover' />
+
+        </div>
+        <div className='relative h-[70vh] md:h-[80vh] '>
+          <img src="../../public/img_3.jpg" alt="dd" className='block h-full w-full object-cover' />
+
         </div>
 
-        {/* Card 2 Example */}
-        <div className="bg-white rounded-lg shadow-md p-4 h-64 flex flex-col justify-center items-center">
-          <h3 className="text-lg font-semibold">Book Title 2</h3>
-          <p className="text-gray-500">Author Name</p>
-        </div>
-
-        {/* Card 3 Example */}
-        <div className="bg-white rounded-lg shadow-md p-4 h-64 flex flex-col justify-center items-center">
-          <h3 className="text-lg font-semibold">Book Title 3</h3>
-          <p className="text-gray-500">Author Name</p>
-        </div>
-
-        {/* Card 4 Example */}
-        <div className="bg-white rounded-lg shadow-md p-4 h-64 flex flex-col justify-center items-center">
-          <h3 className="text-lg font-semibold">Book Title 4</h3>
-          <p className="text-gray-500">Author Name</p>
-        </div>
-
-        {/* Card 5 Example */}
-        <div className="bg-white rounded-lg shadow-md p-4 h-64 flex flex-col justify-center items-center">
-          <h3 className="text-lg font-semibold">Book Title 5</h3>
-          <p className="text-gray-500">Author Name</p>
-        </div>
 
       </Carousel>
 
