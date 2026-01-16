@@ -9,7 +9,7 @@ const CustomRightArrow = ({ onClick, ...rest }) => {
     <button
       onClick={() => onClick()} // مهم جداً عشان الزرار يشتغل
       className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-100 text-gray-800 p-3 rounded-full shadow-lg border border-gray-200 transition-all mr-2"
-      aria-label="Next Slide"
+      aria-label="الشريحة التالية"
     >
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -24,7 +24,7 @@ const CustomLeftArrow = ({ onClick, ...rest }) => {
     <button
       onClick={() => onClick()} // مهم جداً عشان الزرار يشتغل
       className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-100 text-gray-800 p-3 rounded-full shadow-lg border border-gray-200 transition-all ml-2"
-      aria-label="Previous Slide"
+      aria-label="الشريحة السابقة"
     >
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -62,6 +62,7 @@ export default function Hero() {
         autoPlay={true}
         autoPlaySpeed={3000}
         keyBoardControl={true}
+        rtl={true}
         containerClass="carousel-container pb-4" // ضفت padding تحت عشان الظل مايتقطعش
         itemClass="px-2"
 
