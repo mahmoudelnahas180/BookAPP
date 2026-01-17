@@ -10,7 +10,7 @@ src/
 ├── components/      (مكونات واجهة عامة: Buttons, Inputs, Modals)
 ├── config/          (الإعدادات العامة: Constants, Themes, Routes)
 ├── features/        (قلب المشروع - كل ميزة رئيسية في مجلد مستقل)
-│   ├── auth/        (Login, Register, ProtectedRoute)
+│   ├── auth/        (Login, SignUp, ProtectedRoute)
 │   ├── books/       (BookCard, BookList, Filter)
 │   ├── cart/        (CartItem, Checkout)
 │   └── admin/       (DashboardCharts, UserTable)
