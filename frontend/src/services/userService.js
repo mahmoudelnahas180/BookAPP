@@ -1,17 +1,29 @@
 import api from "./api";
 
+// 1. تسجيل مستخدم جديد
+export const registerUser = async (userData) => {
+    const response = await api.post("/register", userData);
+    return response.data;
+}
 
-export const registerUser = (userData) => {
-    return api.post("/auth/register", userData)
+// 2. تسجيل الدخول
+export const loginUser = async (userData) => {
+    // وحدنا المسار ليكون تحت /auth
+    const response = await api.post("/signin", userData);
+
+    // ملاحظة: شيلنا الـ localStorage من هنا عشان هنعملها في Redux
+    // بنرجع الداتا على طول للـ Thunk
+    return response.data;
 }
-export const loginUser = async ({ email, password }) => {
-    const response = await api.post("/signin", { email, password })
-    if (response.data.token) {
-        localStorage.setItem("token", response.data.token)
-        localStorage.setItem("user", JSON.stringify(response.data.user))
-        return response.data
+
+// 3. تسجيل الخروج
+export const logoutUser = async () => {
+    try {
+        await api.post("/logout");
+    } catch (error) {
+        console.error("Logout API failed", error);
     }
-}
-export const logoutUser = () => {
-    return api.post("/auth/logout")
-}
+
+    // التنظيف الحقيقي بيحصل في Redux Reducer أو هنا
+    // بس الأفضل نسيب الدالة دي ترجع Promise
+};
