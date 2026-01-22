@@ -1,8 +1,14 @@
 // src/features/auth/components/LoginHeader.jsx
+
+/**
+ * @component LoginHeader
+ * @description ترويسة مشتركة لصفحات الدخول.
+ * تعرض الشعار (Logo) ورسالة الترحيب.
+ */
 export default function LoginHeader() {
     return (
         <>
-            {/* Logo */}
+            {/* Logo Section */}
             <div className="flex justify-center mb-8">
                 <div className="flex items-center gap-3 text-primary">
                     <div className="bg-primary/10 p-2 rounded-xl">
@@ -12,7 +18,7 @@ export default function LoginHeader() {
                 </div>
             </div>
 
-            {/* Welcome Text */}
+            {/* Welcome Text Section */}
             <div className="mb-8 text-center">
                 <h2 className="text-3xl font-serif font-bold text-text-main mb-2 leading-tight">أهلاً بك مجدداً</h2>
                 <p className="text-text-muted text-base">تابع رحلة القراءة الخاصة بك، نحن سعداء بعودتك</p>

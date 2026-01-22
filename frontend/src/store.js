@@ -1,7 +1,15 @@
+/**
+ * @file store.js
+ * @description إعداد مخزن الحالة المركزي (Redux Store).
+ * يقوم بتجميع جميع الـ Reducers الخاصة بالميزات المختلفة (مثل المصادقة، الكتب) في مكان واحد.
+ */
+
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './features/auth/authSlice'
+
 export const store = configureStore({
     reducer: {
-        auth: authReducer
+        // تعريف الـ Slices (أجزاء الحالة)
+        auth: authReducer // الحالة الخاصة بالمصادقة (login, user data)
     }
 })

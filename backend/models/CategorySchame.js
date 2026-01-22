@@ -1,13 +1,16 @@
-const mongoose=require('mongoose')
+/**
+ * @file CategorySchame.js
+ * @description مخطط بيانات التصنيفات.
+ * يستخدم لتجميع الكتب تحت أقسام معينة (مثل: روايات، تقنية، تاريخ).
+ */
 
-const CategorySchame=new mongoose.Schema({
- name:{
-    type:String,
+const mongoose = require('mongoose');
+
+const CategorySchame = new mongoose.Schema({
+ // اسم التصنيف
+ name: {
+    type: String,
    },
-
-
 })
 
-
-
-module.exports=mongoose.model('Category',CategorySchame)
+module.exports = mongoose.model('Category', CategorySchame);

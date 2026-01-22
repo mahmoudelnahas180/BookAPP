@@ -1,12 +1,26 @@
 import api from "./api";
 
-// 1. تسجيل مستخدم جديد
+/**
+ * @file userService.js
+ * @description خدمة إدارة المستخدمين (User Service).
+ * تحتوي على دوال الاتصال بالخادم (API Calls) الخاصة بـ Auth.
+ */
+
+/**
+ * @function registerUser
+ * @description إرسال طلب إنشاء حساب جديد.
+ * @param {Object} userData - بيانات المستخدم (name, email, password).
+ */
 export const registerUser = async (userData) => {
     const response = await api.post("/register", userData);
     return response.data;
 }
 
-// 2. تسجيل الدخول
+/**
+ * @function loginUser
+ * @description إرسال طلب تسجيل الدخول.
+ * @param {Object} userData - (email, password).
+ */
 export const loginUser = async (userData) => {
     // وحدنا المسار ليكون تحت /auth
     const response = await api.post("/signin", userData);
@@ -16,7 +30,10 @@ export const loginUser = async (userData) => {
     return response.data;
 }
 
-// 3. تسجيل الخروج
+/**
+ * @function logoutUser
+ * @description إرسال طلب تسجيل الخروج للسيرفر (اختياري حسب الـ Backend).
+ */
 export const logoutUser = async () => {
     try {
         await api.post("/logout");

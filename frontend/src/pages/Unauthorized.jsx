@@ -1,10 +1,16 @@
 import { Link } from 'react-router-dom';
 
+/**
+ * @component Unauthorized
+ * @description صفحة الوصول المرفوض (403 Forbidden).
+ * تظهر عندما يحاول المستخدم الوصول لصفحة لا يملك صلاحياتها (مثلاً مستخدم عادي يحاول دخول صفحة الأدمن).
+ */
 const Unauthorized = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-4">
             <div className="bg-red-50 p-8 rounded-2xl shadow-soft max-w-md w-full">
                 <div className="text-red-500 mb-4">
+                    {/* أيقونة تحذير */}
                     <svg
                         className="w-20 h-20 mx-auto"
                         fill="none"
@@ -23,6 +29,8 @@ const Unauthorized = () => {
                 <p className="text-gray-600 mb-8">
                     عذراً، ليس لديك الصلاحيات الكافية للوصول إلى هذه الصفحة.
                 </p>
+                
+                {/* خيارات للمستخدم: العودة للرئيسية أو تبديل الحساب */}
                 <div className="flex flex-col gap-3">
                     <Link
                         to="/"
