@@ -11,6 +11,12 @@ const UserSchame=new mongoose.Schema({
    password:{
     type:String,
     require:true
+   },
+   role:{
+    type:String,
+    enum:["user","admin"],
+    default:"user"
    }
+   
 })
 module.exports=mongoose.model("User",UserSchame)
