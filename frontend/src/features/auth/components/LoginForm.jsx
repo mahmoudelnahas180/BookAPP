@@ -2,23 +2,21 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginThunk } from '../authSlice';
-import { useNavigate } from 'react-router-dom'
-import { loginUser } from '../../../services/userService';
+import { Link, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 
 export default function LoginForm() {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false);
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm()
     // reduxHook
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const { isLoading, error } = useSelector((state) => state.auth)
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log("تم تقديم النموذج");
+    const onSubmit = async (data) => {
+        console.log("Form submitted without reload", data);
 
         try {
-            const resultAction = await dispatch(loginThunk({ email, password })).unwrap()
+            const resultAction = await dispatch(loginThunk(data)).unwrap()
             navigate('/')
         } catch (err) {
             console.log(err);
@@ -27,7 +25,7 @@ export default function LoginForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* Email Field */}
             <div className="space-y-2">
                 <label className="block text-sm font-medium text-text-main" htmlFor="email">البريد الإلكتروني</label>
@@ -37,9 +35,17 @@ export default function LoginForm() {
                         id="email"
                         type="email"
                         placeholder="user@example.com"
-                        required
-                        onChange={(e) => setEmail(e.target.value)}
+
+                        {...register('email', {
+                            required: 'البريد الإلكتروني مطلوب',
+                            pattern: {
+                                value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                                message: 'البريد الالكتروني غير صحيح'
+                            }
+                        })}
+
                     />
+                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <span className="material-symbols-outlined text-gray-400 text-[20px]">mail</span>
                     </div>
@@ -57,8 +63,8 @@ export default function LoginForm() {
                         id="password"
                         type={showPassword ? "text" : "password"}
                         placeholder="********"
-                        required
-                        onChange={(e) => setPassword(e.target.value)}
+
+                        {...register("password")}
                     />
                     <button
                         type="button"
@@ -71,12 +77,12 @@ export default function LoginForm() {
                     </button>
                 </div>
                 <div className="flex justify-end pt-1">
-                    <a className="text-sm text-primary hover:text-primary-hover font-medium underline-offset-4 hover:underline transition-all" href="#">نسيت كلمة المرور؟</a>
+                    <Link to="/auth/forgot-password" className="text-sm text-primary hover:text-primary-hover font-medium underline-offset-4 hover:underline transition-all">نسيت كلمة المرور؟</Link>
                 </div>
             </div>
 
             {/* Submit Button */}
-            <button type='submit' disabled={isLoading} className="w-full h-12 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/40 transition-all duration-300 transform active:scale-[0.98] flex items-center justify-center gap-2" type="submit">
+            <button type='submit' disabled={isLoading} className="w-full h-12 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/40 transition-all duration-300 transform active:scale-[0.98] flex items-center justify-center gap-2" >
                 {isLoading ? (
                     <span>جاري التحقق...</span>
                 ) : (
