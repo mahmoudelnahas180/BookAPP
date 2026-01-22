@@ -27,7 +27,7 @@ export default function ProtectedRoute({ allowedRoles }) {
     try {
         const decodedToken = jwtDecode(token); // فك تشفير التوكن لقراءة البيانات (Payload)
         const currentTime = Date.now() / 1000; // الوقت الحالي بالثواني
-
+         
         // 2. التحقق من انتهاء صلاحية التوكن
         if (decodedToken.exp < currentTime) {
             localStorage.removeItem('token'); // حذف التوكن المنتهي
