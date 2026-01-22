@@ -35,7 +35,14 @@ export default function LoginForm() {
             // استدعاء دالة تسجيل الدخول وانتظار النتيجة (unwrap لكشف الخطأ إن وجد)
             const resultAction = await dispatch(loginThunk(data)).unwrap()
             // التوجيه للصفحة الرئيسية عند النجاح
-            navigate('/')
+            // /admin or /user or /unauthorized
+            if (resultAction.user.role === 'admin') {
+                navigate('/admin')
+            } else if (resultAction.user.role === 'user') {
+                navigate('/user')
+            } else {
+                navigate('/unauthorized')
+            }
         } catch (err) {
             console.log(err);
         }
