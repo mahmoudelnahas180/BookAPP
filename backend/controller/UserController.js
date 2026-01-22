@@ -41,7 +41,7 @@ async UserSignIn(req,res,next){
        return res.status(400).json({message:"User Not exisit "})
  }
 
- let token=await signAsync({email,id:user._id},process.env.JWT_SECRET,{expiresIn:'1w'})
+ let token=await signAsync({email,id:user._id,role:user.role},process.env.JWT_SECRET,{expiresIn:'1w'})
  res.status(201).json({message:"User Login successfully",user:user,token:token})
 
 }
