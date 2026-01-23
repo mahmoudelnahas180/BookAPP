@@ -16,6 +16,17 @@ export default function Header() {
         { name: 'تواصل معنا', path: '/contact' },
         { name: 'عن التطبيق', path: '/about' },
     ];
+    //loged in user
+    const [user, setUser] = useState(null);
+    const [isLogedIn, setIsLogedIn] = useState(false);
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        console.log(storedUser);
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+            setIsLogedIn(true);
+        }
+    }, []);
 
     const [isScrolled, setIsScrolled] = useState(false); // حالة التمرير لتغيير خلفية الهيدر
     const [isMenuOpen, setIsMenuOpen] = useState(false); // حالة القائمة الجانبية (للموبايل)
@@ -88,18 +99,21 @@ export default function Header() {
                     </button>
 
                     <div className="h-6 w-px bg-gray-200 mx-1"></div>
-
-                    <Link to="/login">
-                        <button className="px-6 py-2 rounded-xl font-medium transition-all duration-300 bg-transparent hover:bg-gray-50 text-gray-600 hover:text-primary">
-                            تسجيل الدخول
-                        </button>
-                    </Link>
-
-                    <Link to="/signup">
-                        <Button className="!rounded-xl !px-6 !py-2 shadow-lg shadow-primary/20 hover:shadow-primary/40">
-                            إنشاء حساب
-                        </Button>
-                    </Link>
+                    {isLogedIn ? (
+                         <p>{user.name}</p>
+                    ) : (
+                       <>  <Link to="/signup">
+                            <Button className="!rounded-xl !px-6 !py-2 shadow-lg shadow-primary/20 hover:shadow-primary/40">
+                                إنشاء حساب
+                            </Button>
+                        </Link>
+                          <Link to="/login">
+                            <button className="px-6 py-2 rounded-xl font-medium transition-all duration-300 bg-transparent hover:bg-gray-50 text-gray-600 hover:text-primary">
+                                تسجيل الدخول
+                            </button>
+                        </Link></>
+                    )}
+                    
                 </div>
 
                 {/* Mobile Toggle - زر القائمة للموبايل */}
