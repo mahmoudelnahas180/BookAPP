@@ -18,9 +18,9 @@ app.use(cors()); // تفعيل CORS
 app.use(express.json()); // تفعيل استقبال البيانات بصيغة JSON
 
 // --- Routes (المسارات) ---
-app.use('/', userrouter); // مسارات المستخدم (تسجيل، دخول)
 app.use('/books', require('./routes/bookRoutes')); // مسارات الكتب
 app.use('/', require('./routes/categoryRoutes')); // مسارات التصنيفات
+app.use('/', userrouter); // مسارات المستخدم (تسجيل، دخول) - وضعت في النهاية لأن فيها wildcard (/:id)
 
 // --- Database Connection ---
 connectDB(); // بدء الاتصال بقاعدة البيانات
