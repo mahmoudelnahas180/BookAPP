@@ -49,13 +49,13 @@ class BookController {
     res.status(201).json({ message: "Book added successfully", book: newBook });
   }
   /** 
-     * @function getLastFiveBooks
-     * @description جلب آخر 5 كتب تم إضافتها.
-     * @route GET /getlastfivebooks
-    
+     * @function getLastFourBooks
+     * @description جلب آخر 4 كتب تم إضافتها.
+     * @route GET /getlastfourbooks
+        
     */
-  async getLastFiveBooks(req, res) {
-    const books = await Book.find().sort({ createdAt: -1 }).limit(5);
+  async getLastFourBooks(req, res) {
+    const books = await Book.find().sort({ createdAt: -1 }).limit(4);
     res.status(200).json({ books });
   }
 

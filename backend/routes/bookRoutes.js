@@ -22,12 +22,12 @@ bookrouter.post("/books", asyncWrapper(BookController.addBook));
 bookrouter.get("/getbooks", asyncWrapper(BookController.getAllBooks));
 
 /**
- * @route GET /getlastfivebooks
- * @description جلب آخر 5 كتب تم إضافتها.
+ * @route GET /getlastfourbooks
+ * @description جلب آخر 4 كتب تم إضافتها.
  */
 bookrouter.get(
-  "/getlastfivebooks",
-  asyncWrapper(BookController.getLastFiveBooks),
+  "/getlastfourbooks",
+  asyncWrapper(BookController.getLastFourBooks),
 );
 /**
  * @route GET /books/:id
