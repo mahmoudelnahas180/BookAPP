@@ -38,7 +38,7 @@ export default function Departments() {
               <Link
                 key={category._id}
                 to={`/categories/${category._id}`}
-                className="group flex min-w-[140px] flex-col items-center gap-4 rounded-2xl border border-gray-100 bg-white p-6 text-center shadow-card transition-all hover:-translate-y-1 hover:border-primary/30 hover:shadow-soft "
+                className=" group flex min-w-[140px] flex-col items-center gap-4 rounded-2xl border border-gray-100 bg-white p-6 text-center shadow-card transition-all hover:-translate-y-1 hover:border-primary/30 hover:shadow-soft "
               >
                 <div className="flex size-14 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
                   <img
