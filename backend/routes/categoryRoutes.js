@@ -14,4 +14,28 @@ const CategoryController = require("../controller/categoryController");
  */
 categoryrouter.post('/categories', asyncWrapper(CategoryController.addCategory));
 
+/**
+ * @route GET /categories
+ * @description الحصول على جميع التصنيفات.
+ */
+categoryrouter.get('/categories', asyncWrapper(CategoryController.getAllCategories));
+
+/**
+ * @route GET /categories/:id
+ * @description الحصول على تصنيف بـ ID.
+ */
+categoryrouter.get('/categories/:id', asyncWrapper(CategoryController.getCategoryById));
+
+/**
+ * @route PUT /categories/:id
+ * @description تحديث تصنيف بـ ID.
+ */
+categoryrouter.put('/categories/:id', asyncWrapper(CategoryController.updateCategory));
+
+/**
+ * @route DELETE /categories/:id
+ * @description حذف تصنيف بـ ID.
+ */
+categoryrouter.delete('/categories/:id', asyncWrapper(CategoryController.deleteCategory));  
+
 module.exports = categoryrouter;
