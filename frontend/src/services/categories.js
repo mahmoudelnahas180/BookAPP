@@ -9,8 +9,22 @@ import api from "./api";
  * @function getAllCategories
  * @description جلب جميع الفئات.
  */
-export const getAllCategories=async()=>{
-    const response=await api.get("/categories")
-    return response.data
+export const getAllCategories = async (page = 1, limit = 10) => {
+  const response = await api.get(`/categories?page=${page}&limit=${limit}`);
+  return response.data;
+};
 
-}
+export const addCategory = async (category) => {
+  const response = await api.post("/categories", category);
+  return response.data;
+};
+
+export const updateCategory = async (id, category) => {
+  const response = await api.put(`/categories/${id}`, category);
+  return response.data;
+};
+
+export const deleteCategory = async (id) => {
+  const response = await api.delete(`/categories/${id}`);
+  return response.data;
+};
