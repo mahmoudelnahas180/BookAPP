@@ -21,27 +21,42 @@ export default function LastBookShow() {
   }, []);
 
   return (
-    <section className="py-12 bg-white">
+    <section className="py-16 bg-white dark:bg-slate-900">
       <div className="container mx-auto px-5 lg:px-20">
-        <div className="flex items-center justify-between mb-7 mt-4">
+        <div className="flex items-end justify-between mb-10">
           <div>
-            <h5 className="text-2xl font-bold mb-2">وصل حديثاً</h5>
-            <p className="text-gray-500 text-sm">
+            <h2 className="text-3xl font-bold font-serif text-slate-900 dark:text-white mb-2 relative inline-block">
+              وصل حديثاً
+              <span className="absolute -bottom-2 right-0 w-1/2 h-1 bg-primary rounded-full"></span>
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 mt-2 font-display">
               أحدث الإضافات إلى مكتبتنا هذا الأسبوع
             </p>
           </div>
-          <div>
-            <Link className="text-white p-2 hover:bg-primary-hover rounded-full circle bg-primary ml-2">
-              <FontAwesomeIcon icon={faArrowLeft} />
-            </Link>
-            <Link className="text-white p-2 hover:bg-primary-hover rounded-full circle bg-primary">
-              <FontAwesomeIcon icon={faArrowRight} />
-            </Link>
-          </div>
+          <Link
+            to="/books"
+            className="hidden md:flex items-center gap-2 text-primary hover:text-primary-dark font-bold font-display transition-colors group"
+          >
+            <span>عرض كل الكتب</span>
+            <span className="material-symbols-outlined text-[20px] group-hover:-translate-x-1 transition-transform">
+              arrow_back
+            </span>
+          </Link>
         </div>
-        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        </div> */}
+
         <Card books={lastFourBooks} />
+
+        <div className="mt-8 text-center md:hidden">
+          <Link
+            to="/books"
+            className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-bold font-display transition-colors"
+          >
+            <span>عرض كل الكتب</span>
+            <span className="material-symbols-outlined text-[20px]">
+              arrow_back
+            </span>
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -1,50 +1,53 @@
 @import "tailwindcss";
 
 @theme {
-    --color-primary: #2c6777;
-    --color-primary-hover: #225260;
-    --color-background-light: #f8fafa;
-    --color-surface-light: #ffffff;
-    --color-text-main: #111618;
-    --color-text-muted: #5e7e87;
+  --color-primary: #2c6777;
+  --color-primary-hover: #225260;
+  --color-primary-dark: #1f4a56;
+  --color-background-light: #fafafa;
+  --color-background-dark: #212121;
+  --color-surface-light: #ffffff;
+  --color-surface-dark: #2d2d2d;
+  --color-text-main: #111618;
+  --color-text-muted: #5e7e87;
 
-    --font-display: "IBM Plex Sans Arabic", sans-serif;
-    --font-serif: "Noto Naskh Arabic", serif;
+  --font-display: "IBM Plex Sans Arabic", sans-serif;
+  --font-serif: "Noto Naskh Arabic", serif;
 
-    --shadow-soft: 0 20px 40px -10px rgba(44, 103, 119, 0.10);
+  --shadow-soft: 0 20px 40px -10px rgba(44, 103, 119, 0.1);
 
-    --animate-float: float 6s ease-in-out infinite;
-    --animate-float-delayed: float 8s ease-in-out infinite 2s;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 8s ease-in-out infinite 2s;
 }
 
 @keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
+  0% {
+    transform: translateY(0px);
+  }
 
-    50% {
-        transform: translateY(-10px);
-    }
+  50% {
+    transform: translateY(-10px);
+  }
 
-    100% {
-        transform: translateY(0px);
-    }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px;
+  background: #cbd5e1;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+  background: #94a3b8;
 }

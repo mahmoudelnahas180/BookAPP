@@ -1,4 +1,8 @@
-import { Outlet, Link } from 'react-router-dom';
+import { useState } from "react";
+import { Outlet, Link } from "react-router-dom";
+import SideBar from "../features/auth/components/Admin/SideBar";
+import AdminHeader from "../features/admin/components/AdminHeader";
+import { useLocation } from "react-router-dom";
 
 /**
  * @component AdminLayout
@@ -6,47 +10,37 @@ import { Outlet, Link } from 'react-router-dom';
  * يحتوي على شريط جانبي (Sidebar) وترويسة (Header) ومساحة المحتوى المتغيرة.
  */
 const AdminLayout = () => {
+  const location = useLocation();
+  console.log(location.pathname);
+  // admin/products/add
+  if (location.pathname === "/admin/products/add") {
+    return <Outlet />;
+  }
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const closeSidebar = () => setIsSidebarOpen(false);
+
   return (
-    <div className="flex min-h-screen bg-gray-50 text-right" dir="rtl">
-      {/* Sidebar - القائمة الجانبية */}
-      <aside className="w-64 bg-[#2c6777] text-white p-6 hidden md:block">
-        <h2 className="text-2xl font-bold mb-8">لوحة التحكم</h2>
-        <nav className="space-y-4">
-          <Link to="/admin" className="block hover:bg-white/10 p-2 rounded transition-colors">
-            📊 الإحصائيات
-          </Link>
-          <Link to="/admin/products" className="block hover:bg-white/10 p-2 rounded transition-colors">
-            📚 إدارة الكتب
-          </Link>
-          <Link to="/admin/users" className="block hover:bg-white/10 p-2 rounded transition-colors">
-            👥 إدارة المستخدمين
-          </Link>
-          {/* رابط العودة للموقع الرئيسي */}
-          <Link to="/" className="block mt-8 pt-8 border-t border-white/20 hover:bg-white/10 p-2 rounded transition-colors">
-            🏠 العودة للمتجر
-          </Link>
-        </nav>
-      </aside>
+    <div className="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col md:flex-row overflow-hidden">
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-20 md:hidden backdrop-blur-sm"
+          onClick={closeSidebar}
+        />
+      )}
 
-      {/* Main Content - المحتوى الرئيسي */}
-      <div className="flex-1 flex flex-col">
-        {/* Header - ترويسة بسيطة للأدمن */}
-        <header className="bg-white shadow-sm p-4 flex justify-between items-center">
-          <div className="flex items-center gap-4">
-             <span className="font-bold text-[#2c6777] md:hidden">لوحة التحكم</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600 font-medium">مرحباً، المسؤول</span>
-          </div>
-        </header>
+      <SideBar isOpen={isSidebarOpen} onClose={closeSidebar} />
 
-        {/* Page Content - محتوى الصفحة المتغير */}
-        <main className="p-8">
-          <div className="bg-white rounded-xl shadow-soft p-6 min-h-[calc(100vh-160px)]">
-            <Outlet />
-          </div>
-        </main>
-      </div>
+      {/* Main Content Area */}
+      <main className="flex-1 flex flex-col h-screen overflow-hidden relative w-full">
+        <AdminHeader onMenuClick={toggleSidebar} />
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto p-3 md:p-5 space-y-4">
+          <Outlet />
+        </div>
+      </main>
     </div>
   );
 };
