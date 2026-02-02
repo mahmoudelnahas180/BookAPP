@@ -27,10 +27,27 @@ class BookController {
    * 3. حفظ الكتاب في قاعدة البيانات.
    */
   async addBook(req, res) {
-    const { title, author, description, price, stock, isFeatured, category } =
-      req.body;
+    const {
+      title,
+      author,
+      description,
+      price,
+      stock,
+      isFeatured,
+      category,
+      isSale,
+      discountParcent,
+      coverImage,
+    } = req.body;
     // التحقق من المدخلات الأساسية
-    if (!title || !author || !description || !price || !stock || !category) {
+    if (
+      !title ||
+      !author ||
+      !description ||
+      price === undefined ||
+      stock === undefined ||
+      !category
+    ) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -43,6 +60,9 @@ class BookController {
       stock,
       isFeatured,
       category,
+      isSale,
+      discountParcent,
+      coverImage,
     });
 
     await newBook.save();
@@ -66,9 +86,26 @@ class BookController {
    * تقوم بعمل Populate لحقل التصنيف (Category) لجلب بياناته التفصيلية.
    */
   async getAllBooks(req, res) {
-    // جلب الكتب مع بيانات التصنيف المرتبط بها
-    const books = await Book.find().populate("category");
-    res.status(200).json({ books });
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    // Build query object
+    const query = {};
+    if (req.query.category) {
+      query.category = req.query.category;
+    }
+
+    const numberOfBook = await Book.countDocuments(query);
+    const pages = Math.ceil(numberOfBook / limit);
+
+    const books = await Book.find(query)
+      .populate("category")
+      .sort({ createdAt: -1 }) // Sort by newest by default
+      .skip(skip)
+      .limit(limit);
+
+    res.status(200).json({ books, page, limit, numberOfBook, pages });
   }
 
   /**
@@ -94,8 +131,18 @@ class BookController {
    */
   async updateBook(req, res) {
     const { id } = req.params;
-    const { title, author, description, price, stock, isFeatured, category } =
-      req.body;
+    const {
+      title,
+      author,
+      description,
+      price,
+      stock,
+      isFeatured,
+      category,
+      isSale,
+      discountParcent,
+      coverImage,
+    } = req.body;
 
     const book = await Book.findById(id);
     if (!book) {
@@ -108,8 +155,11 @@ class BookController {
     book.description = description || book.description;
     book.price = price || book.price;
     book.stock = stock || book.stock;
-    book.isFeatured = isFeatured || book.isFeatured;
+    book.isFeatured = isFeatured !== undefined ? isFeatured : book.isFeatured;
     book.category = category || book.category;
+    book.isSale = isSale !== undefined ? isSale : book.isSale;
+    book.discountParcent = discountParcent || book.discountParcent;
+    book.coverImage = coverImage || book.coverImage;
 
     await book.save();
     res.status(200).json({ message: "Book updated successfully", book });
@@ -122,13 +172,12 @@ class BookController {
    */
   async deleteBook(req, res) {
     const { id } = req.params;
-    const book = await Book.findById(id);
+    const book = await Book.findByIdAndDelete(id);
 
     if (!book) {
       return res.status(404).json({ message: "Book not found" });
     }
 
-    await book.remove(); // أو Book.deleteOne({ _id: id }) في الإصدارات الأحدث
     res.status(200).json({ message: "Book deleted successfully" });
   }
 }
