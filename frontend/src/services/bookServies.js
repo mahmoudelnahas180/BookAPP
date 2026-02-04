@@ -20,10 +20,26 @@ export const getBookById = async (id) => {
   const response = await api.get(`/books/books/${id}`);
   return response.data;
 };
-export const getallBooks = async (page = 1, limit = 12, category = "") => {
+export const getallBooks = async (
+  page = 1,
+  limit = 12,
+  category = "",
+  status = "",
+  createdBy = "",
+  search = "",
+) => {
   let url = `/books/getbooks?page=${page}&limit=${limit}`;
   if (category) {
     url += `&category=${category}`;
+  }
+  if (status) {
+    url += `&status=${status}`;
+  }
+  if (createdBy) {
+    url += `&createdBy=${createdBy}`;
+  }
+  if (search) {
+    url += `&search=${search}`;
   }
   const response = await api.get(url);
   return response.data;

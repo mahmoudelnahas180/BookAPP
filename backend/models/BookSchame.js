@@ -67,6 +67,17 @@ const BookSchame = new mongoose.Schema({
   coverImage: {
     type: String,
   },
+  // حالة الكتاب (للموافقة من قبل الأدمن)
+  status: {
+    type: String,
+    enum: ["pending", "approved", "rejected"],
+    default: "pending",
+  },
+  // المستخدم الذي أضاف الكتاب
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 module.exports = mongoose.model("Book", BookSchame);

@@ -1,4 +1,10 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBook,
+  faTriangleExclamation,
+  faMoneyBillWave,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function BooksStats({ numberOfBook }) {
   return (
@@ -13,9 +19,7 @@ export default function BooksStats({ numberOfBook }) {
           </p>
         </div>
         <div className="bg-primary/10 p-2 rounded-lg text-primary">
-          <span className="material-symbols-outlined text-[20px]">
-            library_books
-          </span>
+          <FontAwesomeIcon icon={faBook} className="text-[20px]" />
         </div>
       </div>
       <div className="bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm flex items-center justify-between">
@@ -26,7 +30,10 @@ export default function BooksStats({ numberOfBook }) {
           <p className="text-xl font-bold text-secondary font-display">12</p>
         </div>
         <div className="bg-secondary/10 p-2 rounded-lg text-secondary">
-          <span className="material-symbols-outlined text-[20px]">warning</span>
+          <FontAwesomeIcon
+            icon={faTriangleExclamation}
+            className="text-[20px]"
+          />
         </div>
       </div>
       <div className="bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm flex items-center justify-between">
@@ -39,9 +46,7 @@ export default function BooksStats({ numberOfBook }) {
           </p>
         </div>
         <div className="bg-green-500/10 p-2 rounded-lg text-green-600">
-          <span className="material-symbols-outlined text-[20px]">
-            payments
-          </span>
+          <FontAwesomeIcon icon={faMoneyBillWave} className="text-[20px]" />
         </div>
       </div>
     </div>

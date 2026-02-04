@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // from font awsome
-import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Card from "../../components/Card";
 import { getLastFourBooks } from "../../services/bookServies";
@@ -38,9 +38,10 @@ export default function LastBookShow() {
             className="hidden md:flex items-center gap-2 text-primary hover:text-primary-dark font-bold font-display transition-colors group"
           >
             <span>عرض كل الكتب</span>
-            <span className="material-symbols-outlined text-[20px] group-hover:-translate-x-1 transition-transform">
-              arrow_back
-            </span>
+            <FontAwesomeIcon
+              icon={faArrowLeft}
+              className="text-[20px] group-hover:-translate-x-1 transition-transform"
+            />
           </Link>
         </div>
 
@@ -52,9 +53,7 @@ export default function LastBookShow() {
             className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-bold font-display transition-colors"
           >
             <span>عرض كل الكتب</span>
-            <span className="material-symbols-outlined text-[20px]">
-              arrow_back
-            </span>
+            <FontAwesomeIcon icon={faArrowLeft} className="text-[20px]" />
           </Link>
         </div>
       </div>

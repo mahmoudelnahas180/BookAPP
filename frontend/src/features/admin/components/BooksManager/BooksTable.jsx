@@ -1,7 +1,12 @@
 import React from "react";
 import BookRow from "./BookRow";
 
-export default function BooksTable({ books, onEdit, onDelete }) {
+export default function BooksTable({
+  books,
+  onEdit,
+  onDelete,
+  onStatusUpdate,
+}) {
   return (
     <div className="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm overflow-hidden flex flex-col">
       <div className="overflow-x-auto">
@@ -35,6 +40,7 @@ export default function BooksTable({ books, onEdit, onDelete }) {
                 book={book}
                 onEdit={onEdit}
                 onDelete={onDelete}
+                onStatusUpdate={onStatusUpdate}
               />
             ))}
           </tbody>

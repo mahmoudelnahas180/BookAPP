@@ -1,4 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUsers,
+  faCheckCircle,
+  faBan,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   getAllUsers,
   deleteUser,
@@ -105,7 +112,7 @@ export default function UsersManager() {
             </p>
           </div>
           <div className="bg-blue-500/10 p-2 rounded-lg text-blue-600">
-            <span className="material-symbols-outlined text-[20px]">group</span>
+            <FontAwesomeIcon icon={faUsers} className="text-[20px]" />
           </div>
         </div>
       </div>
@@ -202,9 +209,10 @@ export default function UsersManager() {
                           }`}
                           title={user.isBanned ? "فك الحظر" : "حظر المستخدم"}
                         >
-                          <span className="material-symbols-outlined text-[18px]">
-                            {user.isBanned ? "check_circle" : "block"}
-                          </span>
+                          <FontAwesomeIcon
+                            icon={user.isBanned ? faCheckCircle : faBan}
+                            className="text-[18px]"
+                          />
                         </button>
 
                         <button
@@ -212,9 +220,10 @@ export default function UsersManager() {
                           className="p-1 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
                           title="حذف نهائياً"
                         >
-                          <span className="material-symbols-outlined text-[18px]">
-                            delete
-                          </span>
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            className="text-[18px]"
+                          />
                         </button>
                       </div>
                     </td>

@@ -33,6 +33,10 @@ import Categories from "./pages/Categories";
 import CategoryBooks from "./pages/CategoryBooks";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
+import AddBookPage from "./pages/AddBook";
+import Contact from "./pages/Contact";
+import Checkout from "./pages/Checkout";
+
 import Unauthorized from "./pages/Unauthorized";
 import ProtectedRoute from "./features/auth/components/ProtectedRoute";
 
@@ -52,13 +56,15 @@ function App() {
         <Route path="/categories" element={<Categories />} />
         <Route path="/categories/:id" element={<CategoryBooks />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/contact" element={<Contact />} />
         {/* ب) مسارات محمية (Protected Routes) - تتطلب تسجيل دخول */}
         {/* allowedRoles: تحدد من يستطيع الدخول. هنا المستخدم والأدمن كلاهما مسموح */}
         {/* لاحظ: حطيناها جوه UserLayout عشان يفضل الـ Header موجود */}
         <Route element={<ProtectedRoute allowedRoles={["user", "admin"]} />}>
           {/* <Route path="/cart" element={<h1>🛒 سلة الشراء</h1>} /> moved to public/semi-public for now */}
           <Route path="/profile" element={<Profile />} />
-          <Route path="/checkout" element={<h1>💳 الدفع</h1>} />
+          <Route path="/add-book" element={<AddBookPage />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Route>
       </Route>
 

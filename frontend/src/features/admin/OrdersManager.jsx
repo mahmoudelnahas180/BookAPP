@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getAllOrders, updateOrderStatus } from "../../services/orderService";
 import Pagination from "./components/ui/Pagination";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 export default function OrdersManager() {
   const [orders, setOrders] = useState([]);
@@ -84,9 +86,7 @@ export default function OrdersManager() {
             </p>
           </div>
           <div className="bg-blue-500/10 p-2 rounded-lg text-blue-600">
-            <span className="material-symbols-outlined text-[20px]">
-              shopping_cart
-            </span>
+            <FontAwesomeIcon icon={faCartShopping} className="text-[20px]" />
           </div>
         </div>
       </div>

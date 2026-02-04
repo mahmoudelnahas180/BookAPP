@@ -1,4 +1,9 @@
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function BooksPagination({
   page,
@@ -21,9 +26,7 @@ export default function BooksPagination({
           disabled={page === 1}
           className="p-2 rounded-lg hover:bg-white dark:hover:bg-slate-700 border border-transparent hover:border-slate-200 dark:hover:border-slate-600 text-slate-400 hover:text-slate-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <span className="material-symbols-outlined text-[20px]">
-            chevron_left
-          </span>
+          <FontAwesomeIcon icon={faChevronLeft} className="text-[20px]" />
         </button>
         {(() => {
           let visiblePages = [];
@@ -76,9 +79,7 @@ export default function BooksPagination({
           disabled={page === pages}
           className="p-2 rounded-lg hover:bg-white dark:hover:bg-slate-700 border border-transparent hover:border-slate-200 dark:hover:border-slate-600 text-slate-400 hover:text-slate-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <span className="material-symbols-outlined text-[20px]">
-            chevron_right
-          </span>
+          <FontAwesomeIcon icon={faChevronRight} className="text-[20px]" />
         </button>
       </div>
     </div>

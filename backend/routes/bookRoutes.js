@@ -9,11 +9,15 @@ const bookrouter = express.Router();
 const asyncWrapper = require("../utils/asyncWrapper");
 const BookController = require("../controller/bookController");
 
+const verifyToken = require("../middlewares/verifyToken");
+const allowedTo = require("../middlewares/allowedTo");
+
 /**
  * @route POST /books
  * @description إضافة كتاب جديد.
  */
-bookrouter.post("/books", asyncWrapper(BookController.addBook));
+// أي مستخدم مسجل يمكنه إضافة كتاب
+bookrouter.post("/books", verifyToken, asyncWrapper(BookController.addBook));
 
 /**
  * @route GET /getbooks
@@ -39,12 +43,25 @@ bookrouter.get("/books/:id", asyncWrapper(BookController.getBookById));
  * @route PUT /books/:id
  * @description تعديل بيانات كتاب موجود.
  */
-bookrouter.put("/books/:id", asyncWrapper(BookController.updateBook));
+// التعديل حالياً متاح للأدمن أو صاحب الكتاب (يمكن تحسينه في الكونترولر)
+// للتبسيط، سنجعله متاحاً للمسجلين، والكونترولر يمكنه التحقق إذا لزم الأمر،
+// ولكن "الموافقة/الرفض" هي تحديث للحالة، وتتطلب أدمن.
+// سنضيف verifyToken هنا.
+bookrouter.put(
+  "/books/:id",
+  verifyToken,
+  asyncWrapper(BookController.updateBook),
+);
 
 /**
  * @route DELETE /books/:id
  * @description حذف كتاب.
  */
-bookrouter.delete("/books/:id", asyncWrapper(BookController.deleteBook));
+bookrouter.delete(
+  "/books/:id",
+  verifyToken,
+  allowedTo("admin"),
+  asyncWrapper(BookController.deleteBook),
+);
 
 module.exports = bookrouter;

@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice"; // Assuming this exists
 import Button from "./Button";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBookOpen,
   faSearch,
@@ -13,8 +12,8 @@ import {
   faTimes,
   faUser,
   faSignOutAlt,
-  faTachometerAlt
-} from '@fortawesome/free-solid-svg-icons';
+  faTachometerAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
   const { user } = useSelector((state) => state.auth);
@@ -33,6 +32,7 @@ export default function Header() {
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,6 +57,15 @@ export default function Header() {
     navigate("/login");
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/books?search=${searchQuery}`);
+      setSearchQuery("");
+      setIsMenuOpen(false); // Close mobile menu if open
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-transparent font-display
@@ -66,19 +75,42 @@ export default function Header() {
                 : "bg-transparent py-5"
             }`}
     >
-      <div className="container mx-auto px-4 md:px-8 lg:px-16 flex items-center justify-between">
+      <div className="container mx-auto px-4 md:px-8 lg:px-16 flex items-center justify-between gap-4">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 group">
+        <Link to="/" className="flex items-center gap-2 group shrink-0">
           <div className="bg-primary/10 p-2 rounded-xl group-hover:bg-primary/20 transition-colors">
-            <FontAwesomeIcon icon={faBookOpen} className="text-2xl text-primary" />
+            <FontAwesomeIcon
+              icon={faBookOpen}
+              className="text-2xl text-primary"
+            />
           </div>
-          <span className="text-2xl font-bold font-serif text-slate-900 dark:text-white tracking-tight">
+          <span className="text-2xl font-bold font-serif text-slate-900 dark:text-white tracking-tight hidden sm:block">
             مكتبتي
           </span>
         </Link>
 
+        {/* Search Bar - Desktop */}
+        <form
+          onSubmit={handleSearch}
+          className="hidden md:flex flex-1 max-w-md mx-4 relative group"
+        >
+          <input
+            type="text"
+            placeholder="ابحث عن كتاب..."
+            className="w-full h-11 pr-12 pl-4 rounded-xl bg-slate-100 dark:bg-slate-800 border-2 border-transparent focus:border-primary/20 focus:bg-white dark:focus:bg-slate-900 transition-all outline-none text-sm dark:text-white"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="absolute right-0 top-0 h-11 w-11 flex items-center justify-center text-slate-400 group-focus-within:text-primary transition-colors"
+          >
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
+        </form>
+
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-6 shrink-0">
           {navLinks.map((link, i) => (
             <Link
               key={i}
@@ -137,7 +169,10 @@ export default function Header() {
                       to="/admin"
                       className="block px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-b border-slate-100 dark:border-slate-700"
                     >
-                      <FontAwesomeIcon icon={faTachometerAlt} className="ml-2" />
+                      <FontAwesomeIcon
+                        icon={faTachometerAlt}
+                        className="ml-2"
+                      />
                       لوحة التحكم
                     </Link>
                   )}
@@ -194,7 +229,10 @@ export default function Header() {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="p-2 text-slate-900 dark:text-white"
           >
-            <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} className="text-2xl" />
+            <FontAwesomeIcon
+              icon={isMenuOpen ? faTimes : faBars}
+              className="text-2xl"
+            />
           </button>
         </div>
       </div>
@@ -215,7 +253,10 @@ export default function Header() {
         dir="rtl"
       >
         <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center gap-3">
-          <FontAwesomeIcon icon={faBookOpen} className="text-2xl text-primary" />
+          <FontAwesomeIcon
+            icon={faBookOpen}
+            className="text-2xl text-primary"
+          />
           <span className="text-xl font-bold font-serif text-slate-900 dark:text-white">
             مكتبتي
           </span>
@@ -294,4 +335,3 @@ export default function Header() {
     </header>
   );
 }
-```

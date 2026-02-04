@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlus,
+  faLayerGroup,
+  faEdit,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   getAllCategories,
   addCategory,
@@ -107,9 +113,10 @@ export default function CategoriesManager() {
           onClick={() => handleOpenModal()}
           className="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg shadow-lg hover:shadow-primary/30 transition-all duration-200 flex items-center gap-2 font-bold font-display group shrink-0"
         >
-          <span className="material-symbols-outlined group-hover:rotate-90 transition-transform duration-300">
-            add
-          </span>
+          <FontAwesomeIcon
+            icon={faPlus}
+            className="group-hover:rotate-90 transition-transform duration-300"
+          />
           <span>أضف تصنيفاً جديداً</span>
         </button>
       </header>
@@ -140,9 +147,7 @@ export default function CategoriesManager() {
               >
                 {!category.imageUri && (
                   <div className="w-full h-full flex items-center justify-center text-slate-400">
-                    <span className="material-symbols-outlined text-4xl">
-                      category
-                    </span>
+                    <FontAwesomeIcon icon={faLayerGroup} className="text-4xl" />
                   </div>
                 )}
               </div>
@@ -156,18 +161,14 @@ export default function CategoriesManager() {
                     className="p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/5 transition-colors"
                     title="تعديل"
                   >
-                    <span className="material-symbols-outlined text-[20px]">
-                      edit
-                    </span>
+                    <FontAwesomeIcon icon={faEdit} className="text-[20px]" />
                   </button>
                   <button
                     onClick={() => handleDelete(category._id)}
                     className="p-2 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                     title="حذف"
                   >
-                    <span className="material-symbols-outlined text-[20px]">
-                      delete
-                    </span>
+                    <FontAwesomeIcon icon={faTrash} className="text-[20px]" />
                   </button>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getBookById } from "../services/bookServies";
 import { addToCart } from "../features/cart/cartSlice";
@@ -8,11 +8,13 @@ import {
   faBook,
   faShoppingCart,
   faHeart,
+  faBagShopping,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function BookDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -36,6 +38,13 @@ export default function BookDetails() {
     if (book) {
       dispatch(addToCart(book));
       // You could add a toast notification here
+    }
+  };
+
+  const handleBuyNow = () => {
+    if (book) {
+      dispatch(addToCart(book));
+      navigate("/checkout");
     }
   };
 
@@ -146,10 +155,17 @@ export default function BookDetails() {
           <div className="mt-auto flex flex-col sm:flex-row gap-4">
             <button
               onClick={handleAddToCart}
-              className="flex-1 bg-primary hover:bg-primary-dark text-white py-4 rounded-xl font-bold shadow-lg shadow-primary/30 transition-all hover:-translate-y-1 flex items-center justify-center gap-2"
+              className="flex-1 bg-white border-2 border-primary text-primary hover:bg-primary/5 py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2"
             >
               <FontAwesomeIcon icon={faShoppingCart} />
               <span>إضافة للسلة</span>
+            </button>
+            <button
+              onClick={handleBuyNow}
+              className="flex-1 bg-primary hover:bg-primary-dark text-white py-4 rounded-xl font-bold shadow-lg shadow-primary/30 transition-all hover:-translate-y-1 flex items-center justify-center gap-2"
+            >
+              <FontAwesomeIcon icon={faBagShopping} />
+              <span>شراء الآن</span>
             </button>
             <button className="flex-none p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-slate-400 hover:text-red-500">
               <FontAwesomeIcon icon={faHeart} />

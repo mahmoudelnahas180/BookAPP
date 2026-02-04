@@ -1,4 +1,11 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBars,
+  faChevronRight,
+  faMagnifyingGlass,
+  faBell,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function AdminHeader({ onMenuClick }) {
   return (
@@ -9,7 +16,7 @@ export default function AdminHeader({ onMenuClick }) {
           onClick={onMenuClick}
           className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
         >
-          <span className="material-symbols-outlined">menu</span>
+          <FontAwesomeIcon icon={faBars} />
         </button>
 
         {/* Breadcrumbs / Page Title */}
@@ -19,9 +26,10 @@ export default function AdminHeader({ onMenuClick }) {
           </h2>
           <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
             <span>الرئيسية</span>
-            <span className="material-symbols-outlined text-[10px] rtl:rotate-180">
-              chevron_right
-            </span>
+            <FontAwesomeIcon
+              icon={faChevronRight}
+              className="text-[10px] rtl:rotate-180"
+            />
             <span className="text-primary">لوحة التحكم</span>
           </div>
         </div>
@@ -36,14 +44,14 @@ export default function AdminHeader({ onMenuClick }) {
             placeholder="بحث في النظام..."
             type="text"
           />
-          <span className="material-symbols-outlined absolute top-1/2 right-3 -translate-y-1/2 text-slate-400 text-[20px]">
-            search
-          </span>
+          <div className="absolute top-1/2 right-3 -translate-y-1/2 text-slate-400 text-[20px]">
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </div>
         </div>
 
         {/* Notifications */}
         <button className="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors">
-          <span className="material-symbols-outlined">notifications</span>
+          <FontAwesomeIcon icon={faBell} />
           <span className="absolute top-2 right-2.5 size-2 bg-red-500 rounded-full border border-white dark:border-surface-dark"></span>
         </button>
       </div>

@@ -51,6 +51,10 @@ class BookController {
       return res.status(400).json({ message: "All fields are required" });
     }
 
+    // تحديد الحالة بناءً على دور المستخدم
+    // إذا كان أدمن، يتم النشر مباشرة. وإلا يكون معلقاً.
+    const status = req.user.role === "admin" ? "approved" : "pending";
+
     // إنشاء وثيقة الكتاب
     const newBook = new Book({
       title,
@@ -60,22 +64,27 @@ class BookController {
       stock,
       isFeatured,
       category,
-      isSale,
+      isSale, // Consider renaming to isSale in schema if needed, but keeping consistency
       discountParcent,
       coverImage,
+      status,
+      createdBy: req.user._id,
     });
 
     await newBook.save();
     res.status(201).json({ message: "Book added successfully", book: newBook });
   }
-  /** 
-     * @function getLastFourBooks
-     * @description جلب آخر 4 كتب تم إضافتها.
-     * @route GET /getlastfourbooks
-        
-    */
+  /**
+   * @function getLastFourBooks
+   * @description جلب آخر 4 كتب تم إضافتها.
+   * @route GET /getlastfourbooks
+   *
+   */
   async getLastFourBooks(req, res) {
-    const books = await Book.find().sort({ createdAt: -1 }).limit(4);
+    // جلب الكتب الموافق عليها فقط
+    const books = await Book.find({ status: "approved" })
+      .sort({ createdAt: -1 })
+      .limit(4);
     res.status(200).json({ books });
   }
 
@@ -91,9 +100,36 @@ class BookController {
     const skip = (page - 1) * limit;
 
     // Build query object
-    const query = {};
+    // الافتراضي جلب الكتب الموافق عليها (للواجهة العامة)
+    const query = { status: "approved" };
+
     if (req.query.category) {
       query.category = req.query.category;
+    }
+
+    // إذا تم طلب حالة معينة
+    if (req.query.status) {
+      if (req.query.status === "all") {
+        // إذا طلب "الكل"، نزيل فلتر الحالة لجلب جميع الكتب (للوحة التحكم)
+        delete query.status;
+      } else {
+        query.status = req.query.status;
+      }
+    }
+
+    // فلترة حسب المستخدم (للملف الشخصي)
+    if (req.query.createdBy) {
+      query.createdBy = req.query.createdBy;
+      // إذا كان المستخدم يطلب كتبه، ربما يريد رؤية المعلق والمرفوض أيضاً
+      // لكن المنطق الحالي يعتمد على status=approved افتراضياً
+      // الفرونت إند يرسل status="" غالباً، لذا سيبقى approved إلا إذا عدلناه
+      // في Profile.jsx، يفضل إرسال status=all لجلب كل كتب المستخدم
+    }
+
+    // بحث (Search)
+    if (req.query.search) {
+      const searchRegex = new RegExp(req.query.search, "i");
+      query.$or = [{ title: searchRegex }, { author: searchRegex }];
     }
 
     const numberOfBook = await Book.countDocuments(query);
@@ -101,6 +137,7 @@ class BookController {
 
     const books = await Book.find(query)
       .populate("category")
+      .populate("createdBy", "name email") // Show user info
       .sort({ createdAt: -1 }) // Sort by newest by default
       .skip(skip)
       .limit(limit);
@@ -142,6 +179,7 @@ class BookController {
       isSale,
       discountParcent,
       coverImage,
+      status, // استقبال الحالة الجديدة
     } = req.body;
 
     const book = await Book.findById(id);
@@ -160,6 +198,16 @@ class BookController {
     book.isSale = isSale !== undefined ? isSale : book.isSale;
     book.discountParcent = discountParcent || book.discountParcent;
     book.coverImage = coverImage || book.coverImage;
+
+    // تحديث الحالة (مسموح للأدمن فقط)
+    if (status) {
+      if (req.user.role === "admin") {
+        book.status = status;
+      } else {
+        // يمكننا تجاهل المحاولة أو إرجاع خطأ، لكن التجاهل أسهل هنا لعدم تعقيد الرد
+        // console.log("Unauthorized status update attempt");
+      }
+    }
 
     await book.save();
     res.status(200).json({ message: "Book updated successfully", book });

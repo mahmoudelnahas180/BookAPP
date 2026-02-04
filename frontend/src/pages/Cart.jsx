@@ -7,7 +7,6 @@ import {
   decreaseQuantity,
   clearCart,
 } from "../features/cart/cartSlice";
-import { createOrder } from "../services/orderService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartArrowDown,
@@ -16,7 +15,6 @@ import {
   faPlus,
   faTrash,
   faTrashCan,
-  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Cart() {
@@ -25,43 +23,12 @@ export default function Cart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [showCheckout, setShowCheckout] = useState(false);
-  const [address, setAddress] = useState({ city: "", address: "", phone: "" });
-  const [loading, setLoading] = useState(false);
-
   const handleCheckoutClick = () => {
     if (!user) {
       navigate("/login");
       return;
     }
-    setShowCheckout(true);
-  };
-
-  const handleCreateOrder = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      const orderData = {
-        items: items.map((item) => ({
-          book: item._id,
-          quantity: item.quantity,
-          price: item.price,
-        })),
-        shippingAddress: address,
-        totalAmount: totalAmount,
-      };
-
-      await createOrder(orderData);
-      dispatch(clearCart());
-      alert("تم إنشاء الطلب بنجاح!");
-      navigate("/profile");
-    } catch (error) {
-      console.error(error);
-      alert("فشل إنشاء الطلب");
-    } finally {
-      setLoading(false);
-      setShowCheckout(false);
-    }
+    navigate("/checkout");
   };
 
   if (items.length === 0) {
@@ -195,69 +162,6 @@ export default function Cart() {
           </div>
         </div>
       </div>
-
-      {/* Checkout Modal */}
-      {showCheckout && (
-        <div className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-white dark:bg-slate-800 rounded-3xl w-full max-w-lg p-8 shadow-2xl relative animate-fade-in-up">
-            <button
-              onClick={() => setShowCheckout(false)}
-              className="absolute top-4 left-4 p-2 hover:bg-slate-100 rounded-full"
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
-            <h2 className="text-2xl font-bold mb-6 text-center">عنوان الشحن</h2>
-            <form onSubmit={handleCreateOrder} className="space-y-4">
-              <div>
-                <label className="block text-sm font-bold mb-2">المدينة</label>
-                <input
-                  required
-                  type="text"
-                  className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200"
-                  value={address.city}
-                  onChange={(e) =>
-                    setAddress({ ...address, city: e.target.value })
-                  }
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-bold mb-2">
-                  العنوان بالتفصيل
-                </label>
-                <input
-                  required
-                  type="text"
-                  className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200"
-                  value={address.address}
-                  onChange={(e) =>
-                    setAddress({ ...address, address: e.target.value })
-                  }
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-bold mb-2">
-                  رقم الهاتف
-                </label>
-                <input
-                  required
-                  type="text"
-                  className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200"
-                  value={address.phone}
-                  onChange={(e) =>
-                    setAddress({ ...address, phone: e.target.value })
-                  }
-                />
-              </div>
-              <button
-                disabled={loading}
-                className="w-full bg-primary text-white py-4 rounded-xl font-bold mt-4 hover:bg-primary-dark transition-colors disabled:opacity-50"
-              >
-                {loading ? "جاري التأكيد..." : "تأكيد الطلب"}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
