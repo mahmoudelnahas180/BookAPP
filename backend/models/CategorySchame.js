@@ -11,6 +11,10 @@ const CategorySchame = new mongoose.Schema({
  name: {
     type: String,
    },
+ // صورة التصنيف
+ imageUri: {
+    type: String,
+   },
 })
 
 module.exports = mongoose.model('Category', CategorySchame);

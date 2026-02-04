@@ -1,6 +1,9 @@
-import React from 'react'
-import Hero from '../components/Hero'
-
+import React from "react";
+import Hero from "../components/Hero";
+import Departments from "../components/Departments";
+import Footer from "../components/Footer";
+import LastBookShow from "../features/books/LastBookShow";
+import JoinReaderClup from "../components/JoinReaderClup";
 /**
  * @component Home
  * @description الصفحة الرئيسية للتطبيق.
@@ -11,6 +14,14 @@ export default function Home() {
     <>
       {/* قسم العرض الرئيسي (Slider) */}
       <Hero />
+      {/* قسم الأقسام */}
+      <Departments />
+      {/* قسم آخر الكتب */}
+      <LastBookShow />
+      {/* قسم الانضمام لنادي الكتاب */}
+      <JoinReaderClup />
+      {/* قسم الفوتر */}
+      <Footer />
     </>
-  )
+  );
 }

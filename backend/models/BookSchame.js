@@ -4,62 +4,80 @@
  * يحدد خصائص الكتاب وعلاقاته.
  */
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const BookSchame = new mongoose.Schema({
- // عنوان الكتاب
- title: {
+  // عنوان الكتاب
+  title: {
     type: String,
-    require: true
-   },
- // اسم المؤلف
- author: {
+    require: true,
+  },
+  // اسم المؤلف
+  author: {
     type: String,
-    require: true
-   },
- // وصف الكتاب
- description: {
+    require: true,
+  },
+  // وصف الكتاب
+  description: {
     type: String,
-    require: true
-   },
- // السعر
- price: {
-    type: Number,
-    require: true
-   },
- // المخزون (الكمية المتاحة)
- stock: {
+    require: true,
+  },
+  // السعر
+  price: {
     type: Number,
     require: true,
-    default: 0
-   },
-   // علاقة ربط بجدول التصنيفات (Foreign Key)
-   category: {
+  },
+  // المخزون (الكمية المتاحة)
+  stock: {
+    type: Number,
+    require: true,
+    default: 0,
+  },
+  // علاقة ربط بجدول التصنيفات (Foreign Key)
+  category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Category"
-   },
-   // هل الكتاب مميز؟ (يعرض في الصفحة الرئيسية مثلاً)
-   isFeatured: {
+    ref: "Category",
+  },
+  // هل الكتاب مميز؟ (يعرض في الصفحة الرئيسية مثلاً)
+  isFeatured: {
     type: Boolean,
-    default: false
-   },
-   
-   // هل يوجد خصم؟
-   isSale: {
+    default: false,
+  },
+  // تاريخ إضافة الكتاب
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  // تاريخ تحديث الكتاب
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+  // هل يوجد خصم؟
+  isSale: {
     type: Boolean,
-    default: false
-   },
-   // نسبة الخصم
-   discountParcent: {
+    default: false,
+  },
+  // نسبة الخصم
+  discountParcent: {
     type: String, // يفضل تغييره لـ Number لاحقاً للحسابات
-    default: false
-   },
-   // رابط صورة الغلاف
-   coverImage: {
-    type: String
+    default: false,
+  },
+  // رابط صورة الغلاف
+  coverImage: {
+    type: String,
+  },
+  // حالة الكتاب (للموافقة من قبل الأدمن)
+  status: {
+    type: String,
+    enum: ["pending", "approved", "rejected"],
+    default: "pending",
+  },
+  // المستخدم الذي أضاف الكتاب
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+});
 
-   }
-
-})
-
-module.exports = mongoose.model('Book', BookSchame);
+module.exports = mongoose.model("Book", BookSchame);

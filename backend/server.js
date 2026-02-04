@@ -4,23 +4,24 @@
  * يقوم بإعداد السيرفر، ربط قاعدة البيانات، وتعريف المسارات (Routes) والـ Middlewares.
  */
 
-const express = require('express');
-require('dotenv').config(); // تحميل متغيرات البيئة
+const express = require("express");
+require("dotenv").config(); // تحميل متغيرات البيئة
 const cors = require("cors"); // مكتبة للسماح بطلبات من مصادر خارجية (Cross-Origin Resource Sharing)
-const connectDB = require('./config/db'); // دالة الاتصال بقاعدة البيانات
-const userrouter = require('./routes/userRouter'); // مسارات المستخدمين
+const connectDB = require("./config/db"); // دالة الاتصال بقاعدة البيانات
+const userrouter = require("./routes/userRouter"); // مسارات المستخدمين
 
 const app = express();
-const port = process.env.port || 5000; // تحديد المنفذ (Port)
+const port = process.env.port || 3000; // تحديد المنفذ (Port)
 
 // --- Middlewares ---
 app.use(cors()); // تفعيل CORS
 app.use(express.json()); // تفعيل استقبال البيانات بصيغة JSON
 
 // --- Routes (المسارات) ---
-app.use('/', userrouter); // مسارات المستخدم (تسجيل، دخول)
-app.use('/books', require('./routes/bookRoutes')); // مسارات الكتب
-app.use('/', require('./routes/categoryRoutes')); // مسارات التصنيفات
+app.use("/books", require("./routes/bookRoutes")); // مسارات الكتب
+app.use("/categories", require("./routes/categoryRoutes")); // تصحيح المسار ليكون أكثر وضوحاً
+app.use("/orders", require("./routes/orderRouter")); // مسارات الطلبات
+app.use("/", userrouter); // مسارات المستخدم (تسجيل، دخول) - وضعت في النهاية لأن فيها wildcard (/:id)
 
 // --- Database Connection ---
 connectDB(); // بدء الاتصال بقاعدة البيانات
